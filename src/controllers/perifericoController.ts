@@ -50,11 +50,10 @@ export class Buscar {
             
             const produto = await prisma.db_periferico.findMany({
                 where: {
-                    id,
-                    tipo,
-                    nome,
-                    marca,
-                    modelo
+                    tipo: tipo,
+                    nome: nome,
+                    marca: marca,
+                    modelo: modelo
                 },
                 include: {
                     especificacoes : true,                    
@@ -63,6 +62,9 @@ export class Buscar {
                     commentarios : true
                 }
             })
+
+            console.log("id",id, "-", "tipo",tipo, "-", "nome",nome, "-", "marca",marca, "-", "modelo",modelo)
+            
 
             return response.json(produto);
         }
