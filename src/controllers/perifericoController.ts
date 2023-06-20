@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { prisma } from "../prismaClient";
-import { create } from "domain";
 
 export class Salvar {
     async handle(request: Request, response: Response) {
@@ -41,19 +40,16 @@ export class Salvar {
     }
 }
 
-export class Buscar {
+export class BuscarUnico {
     async handle(request: Request, response: Response) {
 
-        const { id, tipo, nome, marca, modelo} = request.body;
+        const { id } = request.params;
 
         try {
             
             const produto = await prisma.db_periferico.findMany({
                 where: {
-                    tipo: tipo,
-                    nome: nome,
-                    marca: marca,
-                    modelo: modelo
+                    id: parseInt(id)
                 },
                 include: {
                     especificacoes : true,                    
@@ -63,8 +59,27 @@ export class Buscar {
                 }
             })
 
-            console.log("id",id, "-", "tipo",tipo, "-", "nome",nome, "-", "marca",marca, "-", "modelo",modelo)
+            return response.json(produto);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+export class BuscarTodos {
+    async handle(request: Request, response: Response) {
+
+        try {
             
+            const produto = await prisma.db_periferico.findMany({
+                include: {
+                    especificacoes : true,                    
+                    avaliacoes : true,
+                    imagens : true,
+                    commentarios : true
+                }
+            })
 
             return response.json(produto);
         }
