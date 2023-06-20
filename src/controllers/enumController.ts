@@ -26,7 +26,29 @@ export class SalvarEnum {
     }
 }
 
-export class BuscarEnum {
+export class BuscarUnicoEnum {
+    async handle(request: Request, response: Response) {
+
+        const { tipo, descricao } = request.params;
+
+        try {
+            
+            const produto = await prisma.enuns.findMany({
+                where: {
+                    tipo,
+                    descricao
+                }
+            })
+
+            return response.json(produto);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+export class BuscarTodosEnum {
     async handle(request: Request, response: Response) {
 
         const { tipo, descricao } = request.body;

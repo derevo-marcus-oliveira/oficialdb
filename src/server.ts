@@ -3,7 +3,7 @@ import cors from 'cors';
 
 import { router } from './router';
 import { Salvar, BuscarUnico, BuscarTodos, BuscarComentario } from './controllers/PerifericoController';
-import { SalvarEnum, BuscarEnum } from './controllers/enumController';
+import { SalvarEnum, BuscarTodosEnum, BuscarUnicoEnum } from './controllers/enumController';
 
 const app = express();
 
@@ -18,8 +18,12 @@ const adicionarEnum = new SalvarEnum();
 router.post("/AdicionarEnum", adicionarEnum.handle)
 
 // Buscar
-const buscarEnum = new BuscarEnum();
-router.get("/BuscarEnum", buscarEnum.handle)
+const buscarTodosEnum = new BuscarUnicoEnum();
+router.get("/BuscarEnum", buscarTodosEnum.handle)
+
+// Buscar
+const buscarUnicoEnum = new BuscarTodosEnum();
+router.get("/BuscarEnum", buscarUnicoEnum.handle)
 
 
 
