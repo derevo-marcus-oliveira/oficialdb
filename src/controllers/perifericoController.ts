@@ -109,3 +109,18 @@ export class BuscarComentario {
         }
     }
 }
+
+export class ExcluirTodos {
+    async handle(request: Request, response: Response) {
+
+        try {
+            
+            const produto = await prisma.db_periferico.deleteMany({})
+
+            return response.json(produto);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }
+}

@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 
 import { router } from './router';
-import { Salvar, BuscarUnico, BuscarTodos, BuscarComentario } from './controllers/PerifericoController';
-import { SalvarEnum, BuscarTodosEnum, BuscarUnicoEnum } from './controllers/enumController';
+import { Salvar, BuscarUnico, BuscarTodos, BuscarComentario, ExcluirTodos } from './controllers/PerifericoController';
+import { SalvarEnum, BuscarTodosEnum, BuscarUnicoEnum, ExcluirTodosEnum, ExcluirEnum, AlterarEnum } from './controllers/enumController';
 
 const app = express();
 
@@ -17,13 +17,27 @@ app.use(router);
 const adicionarEnum = new SalvarEnum();
 router.post("/AdicionarEnum", adicionarEnum.handle)
 
+// alterar
+const alterarEnum = new AlterarEnum();
+router.post("/AlterarEnum", alterarEnum.handle)
+
 // Buscar
-const buscarTodosEnum = new BuscarUnicoEnum();
+const buscarTodosEnum = new BuscarTodosEnum();
 router.get("/BuscarEnum", buscarTodosEnum.handle)
 
 // Buscar
-const buscarUnicoEnum = new BuscarTodosEnum();
-router.get("/BuscarEnum", buscarUnicoEnum.handle)
+const buscarUnicoEnum = new BuscarUnicoEnum();
+router.get("/BuscarEnum:id", buscarUnicoEnum.handle)
+
+// excluir todos
+const excluirTodosEnum = new ExcluirTodosEnum();
+router.delete("/ExcluirTodosEnum", excluirTodosEnum.handle)
+
+// excluir 
+const excluirEnum = new ExcluirEnum();
+router.delete("/ExcluirEnum", excluirEnum.handle)
+
+
 
 
 
@@ -39,6 +53,10 @@ router.get("/Buscar:id", buscarUnico.handle)
 // Buscar
 const buscarTodos = new BuscarTodos();
 router.get("/Buscar", buscarTodos.handle)
+
+// Buscar
+const excluirTodos = new ExcluirTodos();
+router.delete("/Excluir", excluirTodos.handle)
 
 
 // Buscar
