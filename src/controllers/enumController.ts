@@ -29,7 +29,7 @@ export class SalvarEnum {
 export class AlterarEnum {
     async handle(request: Request, response: Response) {
 
-        const { id, descricao } = request.body;
+        const { id, tipo, descricao } = request.body;
         
         try {
             
@@ -38,6 +38,7 @@ export class AlterarEnum {
                     id: parseInt(id)
                 },
                 data : {
+                    tipo,
                     descricao
                 }
             })
@@ -54,7 +55,6 @@ export class BuscarUnicoEnum {
     async handle(request: Request, response: Response) {
 
         const { id } = request.params;
-        console.log(id);
         
         try {
             
