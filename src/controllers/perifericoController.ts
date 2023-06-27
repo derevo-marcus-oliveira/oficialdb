@@ -40,6 +40,45 @@ export class Salvar {
     }
 }
 
+export class Alterar {
+    async handle(request: Request, response: Response) {
+
+        const { id, tipo, nome, marca, modelo, especificacoes, avaliacoes, imagens } = request.body;
+
+        try {
+            
+            await prisma.db_periferico.delete({
+                where: {
+                    id: parseInt(id)
+                }
+            })
+
+            const produto = await prisma.db_periferico.create({
+                data: {
+                    tipo : tipo,
+                    nome : nome,
+                    marca : marca,
+                    modelo : modelo,
+                    imagens : imagens,
+                    especificacoes: especificacoes,
+                    avaliacoes: avaliacoes
+                },
+                include : {
+                    imagens: true,
+                    especificacoes: true,
+                    avaliacoes: true
+                }
+            })
+            
+            return response.json(produto);
+        }
+        catch (error) {
+            console.error(error);
+            return response.json(error);
+        }
+    }
+}
+
 export class BuscarUnico {
     async handle(request: Request, response: Response) {
 
@@ -112,10 +151,15 @@ export class BuscarComentario {
 
 export class ExcluirTodos {
     async handle(request: Request, response: Response) {
-
+        
+        const { id } = request.body;
         try {
             
-            const produto = await prisma.db_periferico.deleteMany({})
+            const produto = await prisma.db_periferico.delete({
+                where: {
+                    id: id
+                }
+            })
 
             return response.json(produto);
         }

@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 import { router } from './router';
-import { Salvar, BuscarUnico, BuscarTodos, BuscarComentario, ExcluirTodos } from './controllers/PerifericoController';
+import { Salvar, BuscarUnico, BuscarTodos, BuscarComentario, ExcluirTodos, Alterar } from './controllers/PerifericoController';
 import { SalvarEnum, BuscarTodosEnum, BuscarUnicoEnum, ExcluirTodosEnum, ExcluirEnum, AlterarEnum } from './controllers/enumController';
 
 const app = express();
@@ -45,6 +45,10 @@ router.delete("/ExcluirEnum", excluirEnum.handle)
 // Adicionar
 const adicionar = new Salvar();
 router.post("/Adicionar", adicionar.handle)
+
+// Alterar
+const alterar = new Alterar();
+router.post("/Alterar", alterar.handle)
 
 // Buscar
 const buscarUnico = new BuscarUnico();
